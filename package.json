@@ -1,0 +1,15 @@
+{
+  "name": "hicapps-tomas-diaz-toro",
+  "version": "1.0.0",
+  "description": "Prueba técnica para Hicapps",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Tomás Díaz Toro",
+  "license": "ISC",
+  "devDependencies": {
+    "firebase-tools": "^13.0.2"
+  }
+}
