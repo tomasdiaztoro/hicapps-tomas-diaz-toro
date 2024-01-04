@@ -43,7 +43,7 @@ describe("patientRepository", () => {
 
   describe("getPatient", () => {
     it("should hit db and return a patient", async () => {
-      const patient = patientsList[0];
+      const patient = patientsList[0].dbRepresentation();
       db.ref.mockReturnValue({
         once: jest.fn().mockResolvedValue({
           exists: () => true,
