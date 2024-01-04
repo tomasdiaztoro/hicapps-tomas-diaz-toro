@@ -18,9 +18,9 @@ export const getPatient = async (patientId) => {
   try {
     const snapshot = await db.ref(`pacientes/${patientId}`).once("value");
     if (snapshot.exists()) {
-      return snapshot.val();
+      return {code: 200, data: snapshot.val(), message: null};
     } else {
-      throw new Error("Patient not found");
+      return {code: 404, data: null, message: "Patient not found"};
     }
   } catch (error) {
     throw new Error(`Error getting patient: ${error.message}`);

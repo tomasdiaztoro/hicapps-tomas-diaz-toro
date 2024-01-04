@@ -10,7 +10,7 @@ describe("createLog", () => {
   const log = new Log("Test log");
   const dbPush = jest.fn();
 
-  it("should call db with the right params", async () => {
+  it("should hit db with the right params", async () => {
     db.ref.mockReturnValue({push: dbPush});
     await createLog(log);
 

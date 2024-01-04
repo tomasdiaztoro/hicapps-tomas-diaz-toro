@@ -42,7 +42,7 @@ describe("patientRepository", () => {
   });
 
   describe("getPatient", () => {
-    it("should hit db with the right data and return a patient", async () => {
+    it("should hit db and return a patient", async () => {
       const patient = patientsList[0];
       db.ref.mockReturnValue({
         once: jest.fn().mockResolvedValue({
@@ -53,7 +53,28 @@ describe("patientRepository", () => {
       const response = await getPatient(0);
 
       expect(db.ref).toHaveBeenCalledWith("pacientes");
-      expect(response).toEqual(patient);
+      expect(response).toEqual({
+        code: 200,
+        data: patient,
+        message: null,
+      });
+    });
+
+    it("should hit db and return 404 if patient is not found", async () => {
+      db.ref.mockReturnValue({
+        once: jest.fn().mockResolvedValue({
+          exists: () => false,
+          val: () => null,
+        }),
+      });
+      const response = await getPatient(0);
+
+      expect(db.ref).toHaveBeenCalledWith("pacientes");
+      expect(response).toEqual({
+        code: 404,
+        data: null,
+        message: "Patient not found",
+      });
     });
 
     it("should handle errors", async () => {

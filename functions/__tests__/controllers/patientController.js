@@ -55,7 +55,10 @@ describe("patientController", () => {
     };
 
     it("should call patientRepository with the right params", async () => {
-      getPatientRepo.mockResolvedValue(patientDBRepresentation);
+      getPatientRepo.mockResolvedValue({
+        code: 200,
+        data: patientDBRepresentation,
+      });
       await getPatient(req, res);
 
       expect(getPatientRepo).toHaveBeenCalledWith(TEST_UUID);
@@ -63,9 +66,27 @@ describe("patientController", () => {
       expect(res.json).toHaveBeenCalledWith(patientDBRepresentation);
     });
 
+    it("should return 404 if patient is not found", async () => {
+      getPatientRepo.mockResolvedValue({
+        code: 404,
+        message: "Patient not found",
+      });
+      await getPatient(req, res);
+
+      expect(getPatientRepo).toHaveBeenCalledWith(TEST_UUID);
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith("Patient not found");
+    });
+
     it("should block access to not accessible patients", async () => {
-      const notAccessiblePatient = {...patient, accessible: false};
-      getPatientRepo.mockResolvedValue(notAccessiblePatient);
+      const notAccessiblePatient = new Patient(
+          ...Object.values(TEST_PATIENT_DATA),
+      );
+      notAccessiblePatient.accessible = false;
+      getPatientRepo.mockResolvedValue({
+        code: 200,
+        data: notAccessiblePatient.dbRepresentation(),
+      });
       await getPatient(req, res);
 
       expect(getPatientRepo).toHaveBeenCalledWith(TEST_UUID);
