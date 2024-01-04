@@ -1,6 +1,6 @@
 # Hicapps - Tomás Díaz Toro
 
-Technical test for full stack developer. The requirements for the development can be foun in https://github.com/HICAPPS/technical-test-firebase.
+Technical test for full stack developer. The requirements for the development can be found in https://github.com/HICAPPS/technical-test-firebase.
 
 ## Prerequisites
 You will need
@@ -20,6 +20,8 @@ These instructions will get you a copy of the project running on your local mach
 - Execute **npm run serve**
 
 ## Available endpoints
+The project is deployed, so you can test the endpoints in https://api-6pzedqghtq-uc.a.run.app/pacientes. This is how they look locally:
+
 GET localhost/hicapps-tomas-diaz-toro/us-central1/api/pacientes/${patientUUID}
 
 **Response**
